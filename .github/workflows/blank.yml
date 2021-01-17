@@ -36,12 +36,12 @@ jobs:
             wget https://github.com/$repos/releases/download/$latest_version/v2rayN.zip
             wget https://github.com/$repos/releases/download/$latest_version/v2rayN-Core.zip
             unzip v2rayN.zip
-            unzip v2rayN-Core.zip -doj ./v2rayN
+            unzip v2rayN-Core.zip -doj "./v2rayN/*"
             rm *.zip -f
 
-            7z a -t7z ./v2rayn-${latest_version}.7z ./v2rayn
-            cp ./v2rayn-${latest_version}.7z ./v2rayn.7z
-            sha256sum ./v2rayn.7z > sha256sum.txt
+            7z a -t7z ./v2rayN-${latest_version}.7z ./v2rayN
+            cp ./v2rayN-${latest_version}.7z ./v2rayN.7z
+            sha256sum ./v2rayN.7z > sha256sum.txt
             
             git add .
             git config user.name "Scaleya"
