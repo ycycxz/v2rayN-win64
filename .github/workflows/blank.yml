@@ -36,7 +36,9 @@ jobs:
             wget https://github.com/$repos/releases/download/$latest_version/v2rayN.zip
             wget https://github.com/$repos/releases/download/$latest_version/v2rayN-Core.zip
             mkdir v2rayn
-            unzip *.zip -d ./v2rayn && rm *.zip
+            unzip v2rayN.zip -d ./v2rayn
+            unzip v2rayN-Core.zip -d ./v2rayn
+            rm *.zip -f
 
             7z a -t7z ./v2rayn-${latest_version}.7z ./v2rayn
             cp ./v2rayn-${latest_version}.7z ./v2rayn.7z
