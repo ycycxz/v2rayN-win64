@@ -58,9 +58,9 @@ jobs:
             wget https://github.com/$repos/releases/download/$latest_version/Xray-windows-64.zip
             unzip Xray-windows-64.zip
             
-            cp -rf ./v2ray-windows-64/* ./v2rayN/
+            A | cp -rf ./v2ray-windows-64/* ./v2rayN/
             rm -rf ./v2ray-windows-64
-            cp ./Xray-windows-64/xray.exe ./v2rayN/
+            A | cp -rf ./Xray-windows-64/* ./v2rayN/
             rm -rf ./Xray-windows-64
             rm *.zip -f
 
