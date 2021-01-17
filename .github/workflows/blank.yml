@@ -38,7 +38,7 @@ jobs:
             mkdir v2rayn
             unzip *.zip -d ./v2rayn && rm *.zip
 
-            7z a -t7z ./v2rayN-${latest_version}.7z ./v2rayn
+            7z a -t7z ./v2rayn-${latest_version}.7z ./v2rayn
             cp ./v2rayn-${latest_version}.7z ./v2rayn.7z
             sha256sum ./v2rayn.7z > sha256sum.txt
             
