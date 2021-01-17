@@ -35,7 +35,7 @@ jobs:
 
             wget https://github.com/$repos/releases/download/$v2rayN_latest_version/v2rayN.zip
             unzip v2rayN.zip
-            mkdir tmp
+
 
 
             repos="v2fly/v2ray-core"
@@ -46,6 +46,7 @@ jobs:
             --connect-timeout 10 | grep  -m1 "name" | cut -d\" -f4)
             echo $latest_version
             wget https://github.com/$repos/releases/download/$latest_version/v2ray-windows-64.zip
+            mkdir tmp
             unzip v2ray-windows-64.zip -d ./tmp
             
             
@@ -57,10 +58,12 @@ jobs:
             --connect-timeout 10 | grep  -m1 "name" | cut -d\" -f4)
             echo $latest_version
             wget https://github.com/$repos/releases/download/$latest_version/Xray-windows-64.zip
-            unzip Xray-windows-64.zip -od ./tmp
+            mkdir tmp1
+            unzip Xray-windows-64.zip -d ./tmp1
             
             cp -rf ./tmp/* ./v2rayN/
-            rm *.zip tmp -fr
+            cp ./tmp1/xray.exe ./v2rayN/
+            rm *.zip tmp tmp1 -fr
 
             7z a -t7z ./v2rayN-${latest_version}.7z ./v2rayN
             cp ./v2rayN-${latest_version}.7z ./v2rayN.7z
