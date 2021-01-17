@@ -65,8 +65,8 @@ jobs:
             cp ./tmp1/xray.exe ./v2rayN/
             rm *.zip tmp tmp1 -fr
 
-            7z a -t7z ./v2rayN-${latest_version}.7z ./v2rayN
-            cp ./v2rayN-${latest_version}.7z ./v2rayN.7z
+            7z a -t7z ./v2rayN-${v2rayN_latest_version}.7z ./v2rayN
+            cp ./v2rayN-${v2rayN_latest_version}.7z ./v2rayN.7z
             sha256sum ./v2rayN.7z > sha256sum.txt
             
             git add .
