@@ -60,7 +60,7 @@ jobs:
             
             cp -rf ./v2ray-windows-64/* ./v2rayN/
             rm -rf ./v2ray-windows-64
-            yes | cp -rf ./Xray-windows-64/* ./v2rayN/
+            cp -rf ./Xray-windows-64/xray.exe ./v2rayN/
             rm -rf ./Xray-windows-64
             rm *.zip -f
 
