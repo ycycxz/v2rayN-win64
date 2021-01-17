@@ -1,0 +1,52 @@
+name: release
+on:
+  schedule:
+    - cron: "10 10 1-31/2 * *"
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout out project files
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+
+      - name: Check and release
+        run: |
+          sudo apt-get install -y p7zip-full
+          repos="2dust/v2rayN"
+          latest_version=$(curl \
+          -H "Accept: application/vnd.github.v3+json" \
+          -H "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36" \
+          -s "https://api.github.com/repos/$repos/tags" \
+          --connect-timeout 10 | grep  -m1 "name" | cut -d\" -f4)
+          echo $latest_version
+          
+          DIST_TAGS_URL="https://api.github.com/repos/${{ github.repository }}/tags"
+          DIST_TAG_FOUND=`curl -H "Accept: application/vnd.github.v3+json" -H "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36" -s ${DIST_TAGS_URL} --connect-timeout 5 | grep "\"name\"\: \"${Qlatest_version}\""` || true
+
+          
+          if [ -z ${DIST_TAG_FOUND} ]; then
+            rm -rf *
+
+            wget https://github.com/$repos/releases/download/$latest_version/v2rayN.zip
+            wget https://github.com/$repos/releases/download/$latest_version/v2rayN-Core.zip
+            mkdir v2rayn
+            unzip *.zip -d ./v2rayn && rm *.zip
+
+            7z a -t7z ./v2rayN-${latest_version}.7z ./v2rayn
+            cp ./v2rayn-${latest_version}.7z ./v2rayn.7z
+            sha256sum ./v2rayn.7z > sha256sum.txt
+            
+            git add .
+            git config user.name "Scaleya"
+            git config user.email "61817665+Scaleya@users.noreply.github.com"
+            git commit -m "Version ${latest_version}"
+            git tag -a "${latest_version}" -m "Version ${latest_version}"
+            git remote add release "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
+            git push -u --follow-tags release main
+          fi
